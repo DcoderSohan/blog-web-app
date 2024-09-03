@@ -17,37 +17,49 @@ const Header = () => {
   ];
 
   const NavItem = ({ item }) => {
+    const [dropdown, setDropdown] = useState(false);
+
+    const toggleDropdownHandler = () => {
+      setDropdown((curState) => !curState);
+    };
+
     return (
-      <li className="relative group flex justify-center lg:justify-start">
+      <li className="relative flex flex-col items-center lg:items-start group">
         {item.type === "link" ? (
-          <>
-            <a
-              href="/"
-              className="relative px-4 py-2 flex justify-center items-center transition-colors duration-300 group-hover:text-blue-600"
-            >
-              {item.name}
-            </a>
-            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-500 group-hover:w-full"></span>
-          </>
+          <button className="relative px-4 py-2 transition-colors duration-300 hover:text-blue-600">
+            {item.name}
+            {/* Underline animation */}
+            <span className="cursor-pointer absolute bottom-0 left-0 w-0 h-[2px] bg-blue-600 transition-all duration-500 group-hover:w-full"></span>
+          </button>
         ) : (
           <>
-            <a
-              href="#"
-              className="relative px-4 py-2 flex justify-center items-center transition-colors duration-300 group-hover:text-blue-600 bg-white"
+            <button
+              onClick={toggleDropdownHandler}
+              className="relative px-4 py-2 rounded-lg flex items-center justify-center transition-colors duration-300 hover:text-blue-600"
             >
               <span>{item.name}</span>
-              <IoIosArrowDown className="ml-2" />
-            </a>
-            <div className="hidden group-hover:block transition-all duration-500 pt-4 absolute top-full right-0 w-max">
-              <ul className="flex flex-col shadow-lg rounded-lg overflow-hidden justify-center">
+              <IoIosArrowDown
+                className={`ml-2 transition-transform duration-300 ${
+                  dropdown ? "rotate-180" : "rotate-0"
+                }`}
+              />
+            </button>
+            {/* Dropdown menu */}
+            <div
+              className={`${
+                dropdown ? "flex" : "hidden"
+              } flex-col lg:hidden transition-all duration-500 absolute top-full left-0 w-max bg-white shadow-lg rounded-md z-10`}
+            >
+              <ul className="flex flex-col">
                 {item.items.map((page, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="hover:bg-blue-600 hover:text-white px-4 py-2 text-black"
-                  >
-                    {page}
-                  </a>
+                  <li key={index}>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-blue-600 hover:text-white text-black"
+                    >
+                      {page}
+                    </a>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -64,7 +76,7 @@ const Header = () => {
           <span className="text-blue-600 lg:text-2xl font-semibold">Trend</span>
           <span className="lg:text-2xl font-semibold">Globalize</span>
         </div>
-        <div className="lg:hidden z-[50]">
+        <div className="lg:hidden z-[50] cursor-pointer">
           {opened ? (
             <IoIosClose className="w-7 h-7" onClick={navOpenedHandler} />
           ) : (
