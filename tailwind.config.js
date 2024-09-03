@@ -4,7 +4,15 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ['Poppins', 'sans-serif'],
+        Poppins: ["Poppins", "sans-serif"],
+        roboto:["Roboto", "system-ui"]
+      },
+      colors: {
+        primary: "#1e88e5",
+        dark: {
+          hard: "#080808",
+          light: "#212f3d",
+        },
       },
     },
   },
