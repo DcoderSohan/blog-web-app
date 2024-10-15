@@ -17,12 +17,6 @@ const Header = () => {
   ];
 
   const NavItem = ({ item }) => {
-    const [dropdown, setDropdown] = useState(false);
-
-    const toggleDropdownHandler = () => {
-      setDropdown((curState) => !curState);
-    };
-
     return (
       <li className="relative flex flex-col items-center lg:items-start group">
         {item.type === "link" ? (
@@ -33,23 +27,12 @@ const Header = () => {
           </button>
         ) : (
           <>
-            <button
-              onClick={toggleDropdownHandler}
-              className="relative px-4 py-2 rounded-lg flex items-center justify-center transition-colors duration-300 hover:text-blue-600"
-            >
+            <button className="relative px-4 py-2 rounded-lg flex items-center justify-center transition-colors duration-300 hover:text-blue-600">
               <span>{item.name}</span>
-              <IoIosArrowDown
-                className={`ml-2 transition-transform duration-300 ${
-                  dropdown ? "rotate-180" : "rotate-0"
-                }`}
-              />
+              <IoIosArrowDown className="ml-2" />
             </button>
-            {/* Dropdown menu */}
-            <div
-              className={`${
-                dropdown ? "flex" : "hidden"
-              } flex-col lg:hidden transition-all duration-500 absolute top-full left-0 w-max bg-white shadow-lg rounded-md z-10`}
-            >
+            {/* Dropdown menu visible on hover */}
+            <div className="hidden lg:group-hover:flex absolute top-full left-0 w-max bg-white shadow-lg rounded-md z-10">
               <ul className="flex flex-col">
                 {item.items.map((page, index) => (
                   <li key={index}>
